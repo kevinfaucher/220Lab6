@@ -53,8 +53,10 @@ void SortingClass::selectionSort(int arr[]) {
 
 }
 
-void SortingClass::insertionSort(int arr[], int length) {
-    int i, j, tmp;
+void SortingClass::insertionSort(int arr[]) {
+    int i, j, tmp, length;
+    length = (sizeof(arr)/sizeof(*arr));
+    
     for (i = 1; i < length; i++) {
         j = i;
         while (j > 0 && arr[j - 1] > arr[j]) {
@@ -66,37 +68,41 @@ void SortingClass::insertionSort(int arr[], int length) {
     }
 }
 
-void SortingClass::quickSort(int first, int last, int *arr[]) {
-    int min = (first + last) / 2;
-    //cout<<"QS:"<<first<<","<<last<<"\n";
+void SortingClass::quickSort(int first, int last, int arr[]) {
+    if (last - first > 1) { // There is data to be sorted.
+        // Partition the table.
+        int pivot = partition(first, last, arr);
 
-    int i = first;
-    int j = last;
-    int pivot = arr[min];
+        // Sort the left half.
+        quickSort(first, pivot - 1, arr);
 
-    while (first < j || i < last) {
-        while (arr[i] < pivot)
-            i++;
-        while (arr[j] > pivot)
-            j--;
-
-        if (i <= j) {
-            swap(i, j, arr);
-            i++;
-            j--;
-        } else {
-            if (first < j)
-                quickSort(arr, first, j);
-            if (i < last)
-                quickSort(arr, i, last);
-            return;
-        }
+        // Sort the right half.
+        quickSort(pivot + 1, last, arr);
     }
 }
 
-int SortingClass::partition(int first, int last, int arr[]) {
-    //(7 pts)again, because you're only partitioning part of the array
+int SortingClass::partition(int first, int last, int arr[]){
+     int  p = first;
+     int pivot = arr[first];
+      int i = first+1, j = last;
+      int tmp;
+      while (i <= j) {
+             while (arr[i] < pivot)
+                  i++;
+            while (arr[j] > pivot)
+                  j--;
+            if (i <= j) {
+                  tmp = arr[i];
+                  arr[i] = arr[j];
+                  arr[j] = tmp;
+                  i++;
+                  j--;
+            }
+      }
+      return p;
 }
+
+
 
 void SortingClass::merge(int arr[], int f, int m, int l) {
     int n1 = m - f + 1;
@@ -126,16 +132,14 @@ void SortingClass::merge(int arr[], int f, int m, int l) {
 void SortingClass::mergeSort(int a[], int low, int hi) {
     // (4 pts)keeps dividing the portion of the array between the low index and the hi
     // index by dividing by 2
-        int q;
-        if(low<hi)
-        {
-         q=(low+hi)/2;
-         mergeSort(a,low,q);
-         mergeSort(a,q+1,hi);
-         merge(a,low,q,hi);
-        }
+    int q;
+    if (low < hi) {
+        q = (low + hi) / 2;
+        mergeSort(a, low, q);
+        mergeSort(a, q + 1, hi);
+        merge(a, low, q, hi);
     }
-
+}
 
 void SortingClass::bubbleSort(int arr[], int n) {
     for (int i = 0; i < n; ++i)
