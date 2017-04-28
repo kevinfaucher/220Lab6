@@ -82,24 +82,28 @@ void SortingClass::quickSort(int first, int last, int arr[]) {
 }
 
 int SortingClass::partition(int first, int last, int arr[]){
-     int  p = first;
-     int pivot = arr[first];
-      int i = first+1, j = last;
-      int tmp;
-      while (i <= j) {
-             while (arr[i] < pivot)
-                  i++;
-            while (arr[j] > pivot)
-                  j--;
-            if (i <= j) {
-                  tmp = arr[i];
-                  arr[i] = arr[j];
-                  arr[j] = tmp;
-                  i++;
-                  j--;
-            }
-      }
-      return p;
+     int x = first;
+     int y = end;
+     int tmp;
+     int v = arr[x];
+     x++;
+     while (x <= y){
+    	 while (arr[x]<v)
+    		 x++;
+    	 while (arr[y]> v)
+    		 y--;
+    	 if (x<=y){
+    		 tmp = arr[x];
+    		 arr[x]=arr[y];
+    		 arr[y]=tmp;
+    		 x++:
+    		 y--:
+    	 }
+     }
+    arr[first]=arr[y];
+    arr[y] = v;
+
+    return y;
 }
 
 
